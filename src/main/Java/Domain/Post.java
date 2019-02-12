@@ -1,8 +1,8 @@
-package domain;
+package main.Java.domain;
+
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 public class Post {
     //Properties
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long PostID;
 
     private String Text;
@@ -21,7 +21,7 @@ public class Post {
     private List<Post> Reactions;
 
     // Constructors
-    public Post(String text, Date dateTime, Boolean isReaction, domain.User user, List<Post> reactions) {
+    public Post(String text, Date dateTime, Boolean isReaction, User user, List<Post> reactions) {
         Text = text;
         DateTime = dateTime;
         IsReaction = isReaction;
@@ -62,11 +62,11 @@ public class Post {
         IsReaction = reaction;
     }
 
-    public domain.User getUser() {
+    public User getUser() {
         return User;
     }
 
-    public void setUser(domain.User user) {
+    public void setUser(User user) {
         User = user;
     }
 

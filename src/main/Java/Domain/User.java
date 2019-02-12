@@ -1,13 +1,17 @@
-package domain;
+package main.Java.domain;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UserID;
 
     private String Name;
@@ -107,4 +111,37 @@ public class User {
 
     // Methods
 
+    public Boolean SendPost(String text, Boolean isReaction){
+
+        if(isReaction == false){
+            Date date = new Date();
+            Post post = new Post(text, date, false, this, new ArrayList<Post>());
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public List<Post> GetLatestTenPosts(){
+        // TODO: Database is needed for this method
+        throw new NotImplementedException();
+    }
+
+    public Boolean Follow(User user){
+        Following.add(user);
+        user.Followers.add(this);
+        return true;
+    }
+
+    public Boolean Unfollow(User user){
+        if(Following.contains(user) && user.Followers.contains(this)){
+            Following.remove(user);
+            user.Followers.remove(this);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
