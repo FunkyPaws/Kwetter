@@ -79,5 +79,14 @@ public class Post {
     }
 
     // Methods
+    public Boolean addReactionToPost(Post reaction){
+        if(reaction.IsReaction == true){
+            this.Reactions.add(reaction);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 }

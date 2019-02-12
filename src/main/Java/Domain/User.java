@@ -36,6 +36,16 @@ public class User {
         Following = following;
     }
 
+    public User(String name, String biography, String location, String website, Boolean isAdmin, List<User> followers, List<User> following) {
+        Name = name;
+        Biography = biography;
+        Location = location;
+        Website = website;
+        IsAdmin = isAdmin;
+        Followers = followers;
+        Following = following;
+    }
+
     // Getters and Setters
     public Long getUserID() {
         return UserID;
@@ -111,7 +121,7 @@ public class User {
 
     // Methods
 
-    public Boolean SendPost(String text, Boolean isReaction){
+    public Boolean sendPost(String text, Boolean isReaction){
 
         if(isReaction == false){
             Date date = new Date();
@@ -123,18 +133,36 @@ public class User {
         }
     }
 
-    public List<Post> GetLatestTenPosts(){
+    public Boolean sendReaction(Post post, String text, Boolean isReaction){
+
+        if(isReaction == true){
+            Date date = new Date();
+            Post reaction = new Post(text, date, true, this, new ArrayList<Post>());
+            post.addReactionToPost(reaction);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public List<Post> getLatestTenPosts(){
         // TODO: Database is needed for this method
         throw new NotImplementedException();
     }
 
-    public Boolean Follow(User user){
-        Following.add(user);
-        user.Followers.add(this);
-        return true;
+    public Boolean follow(User user){
+        if(!this.Following.contains(user)) {
+            Following.add(user);
+            user.Followers.add(this);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public Boolean Unfollow(User user){
+    public Boolean unfollow(User user){
         if(Following.contains(user) && user.Followers.contains(this)){
             Following.remove(user);
             user.Followers.remove(this);
