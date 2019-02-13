@@ -20,7 +20,6 @@ public class PostDAOImpl implements PostDAO {
 
     public PostDAOImpl() {
         posts = new ArrayList<>();
-
     }
 
     @Override
