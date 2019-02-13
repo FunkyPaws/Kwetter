@@ -32,5 +32,4 @@ public class UserService {
     public Boolean unfollowUser(User follower, User following){
         return this.userDAO.unfollow(follower, following);
     }
-
 }
