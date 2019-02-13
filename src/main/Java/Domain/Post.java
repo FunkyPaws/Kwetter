@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
-public class Post {
+public class Post{
     //Properties
     //@Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long PostID;
@@ -18,15 +18,26 @@ public class Post {
     private Boolean IsReaction;
     private User User;
 
-    private List<Post> Reactions;
+    private Long OriginalPostID;
 
     // Constructors
-    public Post(String text, Date dateTime, Boolean isReaction, User user, List<Post> reactions) {
+
+
+    public Post(Long postID, String text, Date dateTime, Boolean isReaction, User user, Long originalPostID) {
+        PostID = postID;
         Text = text;
         DateTime = dateTime;
         IsReaction = isReaction;
         User = user;
-        Reactions = reactions;
+        OriginalPostID = originalPostID;
+    }
+
+    public Post(String text, Date dateTime, Boolean isReaction, User user, Long originalPostID) {
+        Text = text;
+        DateTime = dateTime;
+        IsReaction = isReaction;
+        User = user;
+        OriginalPostID = originalPostID;
     }
 
     // Getters and Setters
@@ -70,23 +81,12 @@ public class Post {
         User = user;
     }
 
-    public List<Post> getReactions() {
-        return Reactions;
+    public Long getOriginalPostID() {
+        return OriginalPostID;
     }
 
-    public void setReactions(List<Post> reactions) {
-        Reactions = reactions;
-    }
-
-    // Methods
-    public Boolean addReactionToPost(Post reaction){
-        if(reaction.IsReaction == true){
-            this.Reactions.add(reaction);
-            return true;
-        }
-        else {
-            return false;
-        }
+    public void setOriginalPostID(Long originalPostID) {
+        OriginalPostID = originalPostID;
     }
 
 }
