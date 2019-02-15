@@ -23,5 +23,4 @@ public interface UserDAO {
     Boolean unfollow(User follower, User followed);
 
     List<User> getAllUsers();
-
 }

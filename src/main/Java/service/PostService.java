@@ -1,6 +1,7 @@
 package main.Java.service;
 
 import main.Java.dal.PostDAO;
+import main.Java.dal.PostDAOImpl;
 import main.Java.domain.Post;
 import main.Java.domain.User;
 
@@ -9,6 +10,10 @@ import java.util.List;
 public class PostService {
 
     PostDAO postDAO;
+
+    public PostService() {
+        postDAO = new PostDAOImpl();
+    }
 
     public Boolean createPost(Post post){
         return this.postDAO.createPost(post);
