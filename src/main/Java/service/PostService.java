@@ -1,19 +1,21 @@
-package main.Java.service;
+package service;
 
-import main.Java.dal.PostDAO;
-import main.Java.dal.PostDAOImpl;
-import main.Java.domain.Post;
-import main.Java.domain.User;
-
+import dal.PostDAO;
+import domain.Post;
+import domain.User;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.util.List;
 
+@Stateless
 public class PostService {
 
+    @EJB
     PostDAO postDAO;
 
-    public PostService() {
-        postDAO = new PostDAOImpl();
-    }
+//    public PostService() {
+//        postDAO = new PostDAOImpl();
+//    }
 
     public Boolean createPost(Post post){
         return this.postDAO.createPost(post);

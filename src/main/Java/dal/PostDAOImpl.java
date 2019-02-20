@@ -1,41 +1,41 @@
-package main.Java.dal;
+package dal;
 
-import main.Java.domain.Post;
-import main.Java.domain.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import domain.Post;
+import domain.User;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Stateless
 public class PostDAOImpl implements PostDAO {
 
-    //private final EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-//    public UserDAOImpl(EntityManager em) {
-////        this.em = em;
-////    }
+//    public PostDAOImpl(EntityManager em) {
+//        this.em = em;
+//    }
 
     private List<Post> posts;
 
-    public PostDAOImpl() {
-        posts = new ArrayList<>();
-    }
+//    public PostDAOImpl() {
+//        posts = new ArrayList<>();
+//    }
 
     @Override
     public Boolean createPost(Post post) {
-
-        if (!posts.contains(post)){
-            posts.add(post);
-            return true;
-        }
-        return false;
+        em.persist(post);
+        return true;
     }
 
     @Override
     public Boolean deletePost(Post post) {
-        //TODO: will be implemented with the entity manager
-        throw new NotImplementedException();
+       em.remove(post);
+       return true;
     }
 
     @Override

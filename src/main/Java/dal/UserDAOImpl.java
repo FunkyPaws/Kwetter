@@ -1,19 +1,25 @@
-package main.Java.dal;
+package dal;
 
-import main.Java.domain.User;
+import domain.User;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO{
+@Stateless
+public class UserDAOImpl implements UserDAO {
     List<User> users;
 
-    //private final EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
 //    public UserDAOImpl(EntityManager em) {
-////        this.em = em;
-////    }
+//        this.em = em;
+//    }
 
 
     public UserDAOImpl() {
@@ -22,43 +28,26 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public Boolean createUser(User user) {
-        if (!users.contains(user)){
-            users.add(user);
-            return true;
-        }
-        return false;
+        em.persist(user);
+        return true;
     }
 
     @Override
     public Boolean deleteUser(User user) {
-        if(users.contains(user)){
-            users.remove(user);
-            return true;
-        }
-        return false;
+        em.remove(user);
+        return true;
     }
 
     @Override
     public Boolean updateUser(User user) {
-        for (User u : users){
-            if (users.contains(user)){
-                users.remove(u);
-                users.add(user);
-                return true;
-            }
-        }
-        return false;
+        em.merge(user);
+
+        return true;
     }
 
     @Override
     public User getUser(Long ID) {
-
-        for ( User u: users) {
-            if (u.getUserID().equals(ID)){
-                return u;
-            }
-        }
-        return null;
+        return em.find(User.class, ID);
     }
 
     @Override
@@ -75,30 +64,29 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public Boolean follow(User follower, User followed) {
-        if(!follower.getFollowing().contains(followed)) {
+        if (!follower.getFollowing().contains(followed)) {
             follower.getFollowing().add(followed);
             followed.getFollowers().add(follower);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     @Override
     public Boolean unfollow(User follower, User followed) {
-        if(follower.getFollowing().contains(followed) && followed.getFollowers().contains(follower)){
+        if (follower.getFollowing().contains(followed) && followed.getFollowers().contains(follower)) {
             follower.getFollowing().remove(followed);
             followed.getFollowers().remove(follower);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     @Override
     public List<User> getAllUsers() {
-        return users;
+        Query query = em.createNamedQuery("User.getAll", User.class);
+        return query.getResultList();
     }
 }

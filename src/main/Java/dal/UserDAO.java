@@ -1,6 +1,7 @@
-package main.Java.dal;
+package dal;
 
-import main.Java.domain.User;
+
+import domain.User;
 
 import java.util.List;
 

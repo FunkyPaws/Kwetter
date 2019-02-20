@@ -1,18 +1,17 @@
-package main.Java.service;
+package service;
 
-import main.Java.dal.UserDAO;
-import main.Java.dal.UserDAOImpl;
-import main.Java.domain.User;
-
+import dal.UserDAO;
+import domain.User;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.util.List;
 
+
+@Stateless
 public class UserService {
 
+    @EJB
     UserDAO userDAO;
-
-    public UserService() {
-        userDAO = new UserDAOImpl();
-    }
 
     public Boolean createUser(User user) {
         return this.userDAO.createUser(user);

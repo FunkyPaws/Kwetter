@@ -1,17 +1,16 @@
-package main.Java.domain;
+package domain;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.Date;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "User.getAll", query = "SELECT u FROM User AS u")
+})
+public class User implements Serializable {
 
-    //@Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UserID;
 
     private String Name;
@@ -19,9 +18,12 @@ public class User {
     private String Biography;
     private String Location;
     private String Website;
-    private Boolean IsAdmin;
+    private boolean IsAdmin;
 
+    @ManyToMany(mappedBy = "Following")
     private List<User> Followers;
+
+    @ManyToMany
     private List<User> Following;
 
     // Constructors
@@ -55,6 +57,9 @@ public class User {
         IsAdmin = isAdmin;
         Followers = followers;
         Following = following;
+}
+
+    public User() {
     }
 
     // Getters and Setters
@@ -130,5 +135,18 @@ public class User {
         Following = following;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "UserID=" + UserID +
+                ", Name='" + Name + '\'' +
+                ", Password='" + Password + '\'' +
+                ", Biography='" + Biography + '\'' +
+                ", Location='" + Location + '\'' +
+                ", Website='" + Website + '\'' +
+                ", IsAdmin=" + IsAdmin +
+                ", Followers=" + Followers +
+                ", Following=" + Following +
+                '}';
+    }
 }

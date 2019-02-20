@@ -1,28 +1,31 @@
-package main.Java.domain;
+package domain;
 
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
+import javax.persistence.*;
 
-public class Post{
-    //Properties
-    //@Id @GeneratedValue(strategy = GenerationType.AUTO)
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "Post.getAll", query = "SELECT p FROM Post p")
+})
+
+public class Post implements Serializable {
+//    Properties
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long PostID;
 
     private String Text;
     private Date DateTime;
     private Boolean IsReaction;
+
+    @ManyToOne
     private User User;
 
     private Long OriginalPostID;
 
     // Constructors
-
-
     public Post(Long postID, String text, Date dateTime, Boolean isReaction, User user, Long originalPostID) {
         PostID = postID;
         Text = text;
@@ -38,6 +41,9 @@ public class Post{
         IsReaction = isReaction;
         User = user;
         OriginalPostID = originalPostID;
+    }
+
+    public Post() {
     }
 
     // Getters and Setters
