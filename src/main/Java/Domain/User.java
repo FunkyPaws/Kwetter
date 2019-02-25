@@ -10,7 +10,8 @@ import java.util.List;
 })
 public class User implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long UserID;
 
     private String Name;
@@ -20,44 +21,44 @@ public class User implements Serializable {
     private String Website;
     private boolean IsAdmin;
 
-    @ManyToMany(mappedBy = "Following")
-    private List<User> Followers;
-
     @ManyToMany
     private List<User> Following;
 
+//    @ManyToMany(mappedBy = "Following")
+//    private List<User> Followers;
+//
+//    @ManyToMany
+//    private List<User> Following;
+
     // Constructors
-    public User(String name, String password, String biography, String location, String website, Boolean isAdmin, List<User> followers, List<User> following) {
+    public User(String name, String password, String biography, String location, String website, Boolean isAdmin, List<User> following) {
         Name = name;
         Password = password;
         Biography = biography;
         Location = location;
         Website = website;
         IsAdmin = isAdmin;
-        Followers = followers;
         Following = following;
     }
 
-    public User(String name, String biography, String location, String website, Boolean isAdmin, List<User> followers, List<User> following) {
+    public User(String name, String biography, String location, String website, Boolean isAdmin, List<User> following) {
         Name = name;
         Biography = biography;
         Location = location;
         Website = website;
         IsAdmin = isAdmin;
-        Followers = followers;
         Following = following;
     }
 
-    public User(Long userID, String name, String biography, String location, String website, Boolean isAdmin, List<User> followers, List<User> following) {
+    public User(Long userID, String name, String biography, String location, String website, Boolean isAdmin, List<User> following) {
         UserID = userID;
         Name = name;
         Biography = biography;
         Location = location;
         Website = website;
         IsAdmin = isAdmin;
-        Followers = followers;
         Following = following;
-}
+    }
 
     public User() {
     }
@@ -119,13 +120,13 @@ public class User implements Serializable {
         IsAdmin = admin;
     }
 
-    public List<User> getFollowers() {
-        return Followers;
-    }
-
-    public void setFollowers(List<User> followers) {
-        Followers = followers;
-    }
+//    public List<User> getFollowers() {
+//        return Followers;
+//    }
+//
+//    public void setFollowers(List<User> followers) {
+//        Followers = followers;
+//    }
 
     public List<User> getFollowing() {
         return Following;
@@ -145,8 +146,19 @@ public class User implements Serializable {
                 ", Location='" + Location + '\'' +
                 ", Website='" + Website + '\'' +
                 ", IsAdmin=" + IsAdmin +
-                ", Followers=" + Followers +
                 ", Following=" + Following +
                 '}';
+    }
+
+    public void addFollower(User user) {
+        if (!this.Following.contains(user)) {
+            Following.add(user);
+        }
+    }
+
+    public void removeFollowed(User user){
+        if(this.Following.contains(user)){
+            Following.remove(user);
+        }
     }
 }

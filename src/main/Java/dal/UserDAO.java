@@ -21,7 +21,7 @@ public interface UserDAO {
 
     Boolean follow(Long ID, User followed);
 
-    Boolean unfollow(User follower, User followed);
+    Boolean unfollow(Long ID, User followed);
 
     List<User> getAllUsers();
 }

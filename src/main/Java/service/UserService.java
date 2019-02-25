@@ -33,8 +33,8 @@ public class UserService {
         return this.userDAO.follow(ID, user);
     }
 
-    public Boolean unfollowUser(User follower, User following) {
-        return this.userDAO.unfollow(follower, following);
+    public Boolean unfollowUser(Long ID, User following) {
+        return this.userDAO.unfollow(ID, following);
     }
 
     public List<User> getAllUsers() {

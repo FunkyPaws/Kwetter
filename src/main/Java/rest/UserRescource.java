@@ -47,5 +47,12 @@ public class UserRescource {
         this.userService.followUser(ID, user);
         return "follower followed user 2";
     }
+
+    @POST
+    @Path("unfollow/{ID}")
+    public String unfollowUser(@PathParam("ID") Long ID, User user){
+        this.userService.unfollowUser(ID, user);
+        return "follower unfollowed user 2";
+    }
 }
 

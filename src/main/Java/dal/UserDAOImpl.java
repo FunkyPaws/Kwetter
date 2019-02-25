@@ -72,15 +72,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Boolean unfollow(User follower, User followed) {
-        return null;
-//        if (follower.getFollowing().contains(followed) && followed.getFollowers().contains(follower)) {
-//            follower.getFollowing().remove(followed);
-//            followed.getFollowers().remove(follower);
-//            return true;
-//        } else {
-//            return false;
-//        }
+    public Boolean unfollow(Long ID, User followed) {
+        User user = em.find(User.class, ID);
+        User following = em.find(User.class, followed.getUserID());
+        user.removeFollowed(following);
+        em.merge(user);
+        return true;
     }
 
     @Override
