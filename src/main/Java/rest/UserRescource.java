@@ -3,7 +3,6 @@ package rest;
 import domain.User;
 import service.UserService;
 
-import javax.ejb.PostActivate;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -21,23 +20,32 @@ public class UserRescource {
         this.userService.createUser(user);
         return "User created";
     }
-    
+
     @PUT
     @Path("{ID}")
-    public String updateUser(@PathParam("ID") Long ID, User user){
-       user.setUserID(ID);
+    public String updateUser(@PathParam("ID") Long ID, User user) {
+        user.setUserID(ID);
         this.userService.updateUser(user);
         return "User updated";
     }
 
-//    @POST
-//    public String deleteUser(User user) {
-//        this.userService.deleteUser(user);
-//        return "Delete created";
-//    }
+    @DELETE
+    @Path("{ID}")
+    public String deleteUser(@PathParam("ID") Long ID) {
+        this.userService.deleteUser(ID);
+        return "Delete created";
+    }
 
     @GET
     public List<User> getAllUsers() {
         return this.userService.getAllUsers();
     }
+
+    @POST
+    @Path("follow/{ID}")
+    public String followUser(@PathParam("ID") Long ID, User user) {
+        this.userService.followUser(ID, user);
+        return "follower followed user 2";
+    }
 }
+

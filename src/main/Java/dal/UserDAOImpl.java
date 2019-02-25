@@ -33,7 +33,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Boolean deleteUser(User user) {
+    public Boolean deleteUser(Long id) {
+        User user = em.find(User.class, id);
         em.remove(user);
         return true;
     }
@@ -41,7 +42,6 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Boolean updateUser(User user) {
         em.merge(user);
-
         return true;
     }
 
@@ -63,25 +63,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Boolean follow(User follower, User followed) {
-        if (!follower.getFollowing().contains(followed)) {
-            follower.getFollowing().add(followed);
-            followed.getFollowers().add(follower);
-            return true;
-        } else {
-            return false;
-        }
+    public Boolean follow(Long ID, User following) {
+        User user = em.find(User.class, ID);
+        user.addFollower(following);
+        em.merge(user);
+
+        return true;
     }
 
     @Override
     public Boolean unfollow(User follower, User followed) {
-        if (follower.getFollowing().contains(followed) && followed.getFollowers().contains(follower)) {
-            follower.getFollowing().remove(followed);
-            followed.getFollowers().remove(follower);
-            return true;
-        } else {
-            return false;
-        }
+        return null;
+//        if (follower.getFollowing().contains(followed) && followed.getFollowers().contains(follower)) {
+//            follower.getFollowing().remove(followed);
+//            followed.getFollowers().remove(follower);
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
 
     @Override

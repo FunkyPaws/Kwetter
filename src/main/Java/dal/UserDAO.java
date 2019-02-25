@@ -9,7 +9,7 @@ public interface UserDAO {
 
     Boolean createUser(User user);
 
-    Boolean deleteUser(User user);
+    Boolean deleteUser(Long id);
 
     Boolean updateUser(User user);
 
@@ -19,7 +19,7 @@ public interface UserDAO {
 
     List<User> getUserFollowing(User user);
 
-    Boolean follow(User follower, User followed);
+    Boolean follow(Long ID, User followed);
 
     Boolean unfollow(User follower, User followed);
 

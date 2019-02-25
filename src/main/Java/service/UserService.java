@@ -17,8 +17,8 @@ public class UserService {
         return this.userDAO.createUser(user);
     }
 
-    public Boolean deleteUser(User user) {
-        return this.userDAO.deleteUser(user);
+    public Boolean deleteUser(Long id) {
+        return this.userDAO.deleteUser(id);
     }
 
     public Boolean updateUser(User user) {
@@ -29,8 +29,8 @@ public class UserService {
         return this.userDAO.getUser(ID);
     }
 
-    public Boolean followUser(User follower, User following) {
-        return this.userDAO.follow(follower, following);
+    public Boolean followUser(Long ID, User user) {
+        return this.userDAO.follow(ID, user);
     }
 
     public Boolean unfollowUser(User follower, User following) {
