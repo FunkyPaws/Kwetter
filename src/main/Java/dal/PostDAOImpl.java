@@ -3,6 +3,7 @@ package dal;
 import domain.Post;
 import domain.User;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,15 +17,11 @@ public class PostDAOImpl implements PostDAO {
     @PersistenceContext
     private EntityManager em;
 
-//    public PostDAOImpl(EntityManager em) {
-//        this.em = em;
-//    }
-
     private List<Post> posts;
 
-//    public PostDAOImpl() {
-//        posts = new ArrayList<>();
-//    }
+    @EJB
+    UserDAO userDAO;
+
 
     @Override
     public Boolean createPost(Post post) {
@@ -39,9 +36,10 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Boolean sendPost(User user, String text, Boolean isReaction) {
+    public Boolean sendPost(Long userID, String text, Boolean isReaction) {
         if(isReaction == false){
             Date date = new Date();
+            User user = userDAO.getUser(userID);
             Post post = new Post(text, date, isReaction, user, null);
 
             createPost(post);

@@ -25,8 +25,8 @@ public class PostService {
         return this.postDAO.deletePost(post);
     }
 
-    public Boolean sendPost(User user, String text, Boolean isReaction){
-        return this.postDAO.sendPost(user, text, isReaction);
+    public Boolean sendPost(Long userID, String text, Boolean isReaction){
+        return this.postDAO.sendPost(userID, text, isReaction);
     }
 
     public Boolean sendReaction(User user, Post post, String text, Boolean isReaction){

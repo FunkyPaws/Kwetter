@@ -11,7 +11,7 @@ public interface PostDAO {
 
     Boolean deletePost(Post post);
 
-    Boolean sendPost(User user, String text, Boolean isReaction);
+    Boolean sendPost(Long userID, String text, Boolean isReaction);
 
     Boolean sendReaction(User user, Post post, String text, Boolean isReaction);
 
