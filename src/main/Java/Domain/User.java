@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "User.getAll", query = "SELECT u FROM User AS u")
+
 })
 public class User implements Serializable {
 

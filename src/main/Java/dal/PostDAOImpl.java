@@ -17,8 +17,6 @@ public class PostDAOImpl implements PostDAO {
     @PersistenceContext
     private EntityManager em;
 
-    private List<Post> posts;
-
     @EJB
     UserDAO userDAO;
 
@@ -51,7 +49,9 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Boolean sendReaction(User user, Post post, String text, Boolean isReaction) {
+    public Boolean sendReaction(Long ID, Post post, String text, Boolean isReaction) {
+        User user = userDAO.getUser(ID);
+
         if(isReaction == true){
             Date date = new Date();
             Post reaction = new Post(text, date, isReaction, user, post.getPostID());
@@ -65,14 +65,14 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> getLatestTenPosts(User user) {
+    public List<Post> getLatestTenPosts(Long ID) {
         List<Post> userPosts = new ArrayList<>();
-
-        for (Post p :posts){
-            if(p.getUser().equals(user)){
-                userPosts.add(p);
-            }
+        userPosts = em.createNamedQuery("Post.getLatestTen").setParameter("id", ID).getResultList();
+        if(userPosts.size() > 10){
+            return userPosts.subList(userPosts.size()-10, userPosts.size());
         }
-        return userPosts.subList(userPosts.size()-10, userPosts.size());
+        else {
+            return userPosts;
+        }
     }
 }

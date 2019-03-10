@@ -29,11 +29,11 @@ public class PostService {
         return this.postDAO.sendPost(userID, text, isReaction);
     }
 
-    public Boolean sendReaction(User user, Post post, String text, Boolean isReaction){
-        return this.postDAO.sendReaction(user, post,text, isReaction);
+    public Boolean sendReaction(Long ID, Post post, String text, Boolean isReaction){
+        return this.postDAO.sendReaction(ID, post,text, isReaction);
     }
 
-    public List<Post> getLatestsTenPosts(User user){
-        return this.postDAO.getLatestTenPosts(user);
+    public List<Post> getLatestsTenPosts(Long ID){
+        return this.postDAO.getLatestTenPosts(ID);
     }
 }

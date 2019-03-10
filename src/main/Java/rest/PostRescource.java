@@ -7,11 +7,9 @@ import service.PostService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Stateless
 @Path("posts")
@@ -28,4 +26,9 @@ public class PostRescource {
         return "Post created";
     }
 
+    @GET
+    @Path("getUserPosts/{ID}")
+    public List<Post> getLatestTenPosts(@PathParam("ID") Long userID){
+        return this.postService.getLatestsTenPosts(userID);
+    }
 }

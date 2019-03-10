@@ -13,8 +13,8 @@ public interface PostDAO {
 
     Boolean sendPost(Long userID, String text, Boolean isReaction);
 
-    Boolean sendReaction(User user, Post post, String text, Boolean isReaction);
+    Boolean sendReaction(Long userID, Post post, String text, Boolean isReaction);
 
-    List<Post> getLatestTenPosts(User user);
+    List<Post> getLatestTenPosts(Long userID);
 
 }

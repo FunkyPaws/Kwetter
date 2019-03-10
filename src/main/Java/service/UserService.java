@@ -40,4 +40,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return this.userDAO.getAllUsers();
     }
+
+    //TODO: vergeten methode erbij maken get user followers
+    //Select u from User where :user MEMBER OF u.following
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Post.getAll", query = "SELECT p FROM Post p")
+        @NamedQuery(name = "Post.getLatestTen", query = "SELECT p FROM Post AS p WHERE p.User.UserID = :id")
 })
 
 public class Post implements Serializable {
@@ -26,14 +26,6 @@ public class Post implements Serializable {
     private Long OriginalPostID;
 
     // Constructors
-    public Post(Long postID, String text, Date dateTime, Boolean isReaction, User user, Long originalPostID) {
-        PostID = postID;
-        Text = text;
-        DateTime = dateTime;
-        IsReaction = isReaction;
-        User = user;
-        OriginalPostID = originalPostID;
-    }
 
     public Post(String text, Date dateTime, Boolean isReaction, User user, Long originalPostID) {
         Text = text;
