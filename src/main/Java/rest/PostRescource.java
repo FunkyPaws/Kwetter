@@ -31,4 +31,12 @@ public class PostRescource {
     public List<Post> getLatestTenPosts(@PathParam("ID") Long userID){
         return this.postService.getLatestsTenPosts(userID);
     }
+
+    @POST
+    @Path("userSendReaction/{ID}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String sendReaction(@PathParam("ID") Long userID, JsonObject text){
+        this.postService.sendReaction(userID, Long.parseLong(text.getString("postID")), text.getString("text"), true);
+        return " reaction created";
+    }
 }

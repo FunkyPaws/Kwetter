@@ -29,8 +29,8 @@ public class PostService {
         return this.postDAO.sendPost(userID, text, isReaction);
     }
 
-    public Boolean sendReaction(Long ID, Post post, String text, Boolean isReaction){
-        return this.postDAO.sendReaction(ID, post,text, isReaction);
+    public Boolean sendReaction(Long ID, Long postID, String text, Boolean isReaction){
+        return this.postDAO.sendReaction(ID, postID ,text, isReaction);
     }
 
     public List<Post> getLatestsTenPosts(Long ID){

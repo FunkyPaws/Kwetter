@@ -49,12 +49,12 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Boolean sendReaction(Long ID, Post post, String text, Boolean isReaction) {
+    public Boolean sendReaction(Long ID, Long postID, String text, Boolean isReaction) {
         User user = userDAO.getUser(ID);
 
         if(isReaction == true){
             Date date = new Date();
-            Post reaction = new Post(text, date, isReaction, user, post.getPostID());
+            Post reaction = new Post(text, date, isReaction, user, postID);
 
             createPost(reaction);
             return true;
