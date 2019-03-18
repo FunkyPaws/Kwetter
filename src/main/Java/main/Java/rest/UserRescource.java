@@ -1,4 +1,4 @@
-package rest;
+package main.Java.rest;
 
 import domain.User;
 import service.UserService;
@@ -93,11 +93,10 @@ public class UserRescource {
 
     @GET
     @Path("{ID}")
-    public Response getUserByID(@PathParam("ID") Long ID){
-        User user  = this.userService.getUserByID(ID);
+    public Response getUserByID(@PathParam("ID") Long ID) {
+        User user = this.userService.getUserByID(ID);
         return Response.ok(user).build();
     }
-
 
 
 //    @GET
@@ -108,7 +107,7 @@ public class UserRescource {
 
     @GET
     @Path("{ID}/following")
-    public Response getUserFollowing(@PathParam("ID") Long userID){
+    public Response getUserFollowing(@PathParam("ID") Long userID) {
         List<User> users = this.userService.getUserFollowing(userID);
         return Response.ok(users).build();
     }
@@ -120,9 +119,10 @@ public class UserRescource {
 //        return this.userService.getUserFollowers(userID);
 //    }
 
+    // haalt dezelfde lijst op als following, haalt altijd de following op van een user.
     @GET
     @Path("{ID}/followers")
-    public Response getUserFollowers(@PathParam("ID") Long userID){
+    public Response getUserFollowers(@PathParam("ID") Long userID) {
         List<User> users = this.userService.getUserFollowers(userID);
         return Response.ok(users).build();
     }

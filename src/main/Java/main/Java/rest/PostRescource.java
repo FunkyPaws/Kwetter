@@ -1,7 +1,6 @@
-package rest;
+package main.Java.rest;
 
 import domain.Post;
-import domain.User;
 import service.PostService;
 
 import javax.ejb.Stateless;
