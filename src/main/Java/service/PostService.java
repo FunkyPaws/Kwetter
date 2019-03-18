@@ -5,17 +5,14 @@ import domain.Post;
 import domain.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 
 @Stateless
 public class PostService {
 
-    @EJB
+    @Inject
     PostDAO postDAO;
-
-//    public PostService() {
-//        postDAO = new PostDAOImpl();
-//    }
 
     public Boolean createPost(Post post){
         return this.postDAO.createPost(post);

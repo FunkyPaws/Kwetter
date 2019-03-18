@@ -1,12 +1,15 @@
 package domain;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "User.getAll", query = "SELECT u FROM User AS u")
+        @NamedQuery(name = "User.getAll", query = "SELECT u FROM User AS u"),
+        @NamedQuery(name = "User.getFollowers", query = "SELECT u FROM User AS u WHERE :user MEMBER OF u.Followers"),
+        @NamedQuery(name = "User.getFollowing", query = "SELECT u FROM User AS u WHERE :user MEMBER OF u.Following")
 
 })
 public class User implements Serializable {
@@ -16,23 +19,23 @@ public class User implements Serializable {
     private Long UserID;
 
     private String Name;
+
+    @JsonbTransient
     private String Password;
     private String Biography;
     private String Location;
     private String Website;
     private boolean IsAdmin;
 
+    @ManyToMany(mappedBy = "Following")
+    @JsonbTransient
+    private List<User> Followers;
+
     @ManyToMany
     private List<User> Following;
 
-//    @ManyToMany(mappedBy = "Following")
-//    private List<User> Followers;
-//
-//    @ManyToMany
-//    private List<User> Following;
-
     // Constructors
-    public User(String name, String password, String biography, String location, String website, Boolean isAdmin, List<User> following) {
+    public User(String name, String password, String biography, String location, String website, Boolean isAdmin, List<User> following, List<User> follower) {
         Name = name;
         Password = password;
         Biography = biography;
@@ -40,18 +43,20 @@ public class User implements Serializable {
         Website = website;
         IsAdmin = isAdmin;
         Following = following;
+        Followers = follower;
     }
 
-    public User(String name, String biography, String location, String website, Boolean isAdmin, List<User> following) {
+    public User(String name, String biography, String location, String website, Boolean isAdmin, List<User> following, List<User> follower) {
         Name = name;
         Biography = biography;
         Location = location;
         Website = website;
         IsAdmin = isAdmin;
         Following = following;
+        Followers = follower;
     }
 
-    public User(Long userID, String name, String biography, String location, String website, Boolean isAdmin, List<User> following) {
+    public User(Long userID, String name, String biography, String location, String website, Boolean isAdmin, List<User> following, List<User> follower) {
         UserID = userID;
         Name = name;
         Biography = biography;
@@ -59,6 +64,7 @@ public class User implements Serializable {
         Website = website;
         IsAdmin = isAdmin;
         Following = following;
+        Followers = follower;
     }
 
     public User() {
@@ -121,14 +127,15 @@ public class User implements Serializable {
         IsAdmin = admin;
     }
 
-//    public List<User> getFollowers() {
-//        return Followers;
-//    }
-//
-//    public void setFollowers(List<User> followers) {
-//        Followers = followers;
-//    }
+    public List<User> getFollowers() {
+        return Followers;
+    }
 
+    public void setFollowers(List<User> followers) {
+        Followers = followers;
+    }
+
+    @JsonbTransient
     public List<User> getFollowing() {
         return Following;
     }
@@ -147,15 +154,24 @@ public class User implements Serializable {
                 ", Location='" + Location + '\'' +
                 ", Website='" + Website + '\'' +
                 ", IsAdmin=" + IsAdmin +
+                ", Followers=" + Followers +
                 ", Following=" + Following +
                 '}';
     }
 
-    public void addFollower(User user) {
+    //this user goes following other user
+    public void addFollowing(User user) {
         if (!this.Following.contains(user)) {
-            Following.add(user);
+            this.Following.add(user);
         }
     }
+
+    //this user goes following other user
+//    public void addFollower(User user){
+//        if(!user.Followers.contains(this)){
+//            user.Followers.add(this);
+//        }
+//    }
 
     public void removeFollowed(User user){
         if(this.Following.contains(user)){

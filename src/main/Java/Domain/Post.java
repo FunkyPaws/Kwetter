@@ -2,6 +2,7 @@ package domain;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -17,6 +18,10 @@ public class Post implements Serializable {
     private Long PostID;
 
     private String Text;
+
+    //@CreationTimestamp
+    // //Timestamp createdar;
+
     private Date DateTime;
     private Boolean IsReaction;
 

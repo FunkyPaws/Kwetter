@@ -1,8 +1,6 @@
 package dal;
 
 import domain.Post;
-import domain.User;
-
 import java.util.List;
 
 public interface PostDAO {

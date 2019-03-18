@@ -2,9 +2,9 @@ package dal;
 
 import domain.Post;
 import domain.User;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class PostDAOImpl implements PostDAO {
     @PersistenceContext
     private EntityManager em;
 
-    @EJB
+    @Inject
     UserDAO userDAO;
 
 

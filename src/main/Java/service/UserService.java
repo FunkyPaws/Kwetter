@@ -2,15 +2,17 @@ package service;
 
 import dal.UserDAO;
 import domain.User;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 
 
 @Stateless
 public class UserService {
 
-    @EJB
+    @Inject
     UserDAO userDAO;
 
     public Boolean createUser(User user) {
@@ -29,8 +31,8 @@ public class UserService {
         return this.userDAO.getUser(ID);
     }
 
-    public Boolean followUser(Long ID, User user) {
-        return this.userDAO.follow(ID, user);
+    public Boolean followUser(Long ID, Long following) {
+        return this.userDAO.follow(ID, following);
     }
 
     public Boolean unfollowUser(Long ID, User following) {
@@ -41,6 +43,11 @@ public class UserService {
         return this.userDAO.getAllUsers();
     }
 
-    //TODO: vergeten methode erbij maken get user followers
-    //Select u from User where :user MEMBER OF u.following
+    public List<User> getUserFollowers(Long userID) {
+        return this.userDAO.getUserFollowers(userID);
+    }
+
+    public List<User> getUserFollowing(Long userID) {
+        return this.userDAO.getUserFollowing(userID);
+    }
 }

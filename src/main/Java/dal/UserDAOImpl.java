@@ -1,35 +1,23 @@
 package dal;
 
 import domain.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
 public class UserDAOImpl implements UserDAO {
-    List<User> users;
 
     @PersistenceContext
     private EntityManager em;
 
-//    public UserDAOImpl(EntityManager em) {
-//        this.em = em;
-//    }
-
-
-    public UserDAOImpl() {
-        users = new ArrayList<>();
-    }
-
     @Override
     public Boolean createUser(User user) {
-        em.persist(user);
-        return true;
+            em.persist(user);
+            return true;
     }
 
     @Override
@@ -50,30 +38,38 @@ public class UserDAOImpl implements UserDAO {
         return em.find(User.class, ID);
     }
 
+    //TODO: finish this method
     @Override
-    public List<User> getUserFollowers(User user) {
-        //TODO: will be implemented with the entity manager
-        throw new NotImplementedException();
+    public List<User> getUserFollowers(Long userID) {
+        User user = getUser(userID);
+        List<User> followers = em.createNamedQuery("User.getFollowers").setParameter("user", user).getResultList();
+        return followers;
+        //throw new NotImplementedException();
+    }
+
+    //TODO: finish this method
+    @Override
+    public List<User> getUserFollowing(Long userID) {
+        User user = getUser(userID);
+        List<User> following = em.createNamedQuery("User.getFollowers").setParameter("user", user).getResultList();
+        return following;
+        //throw new NotImplementedException();
     }
 
     @Override
-    public List<User> getUserFollowing(User user) {
-        //TODO: will be implemented with the entity manager
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Boolean follow(Long ID, User following) {
-        User user = em.find(User.class, ID);
-        user.addFollower(following);
+    public Boolean follow(Long userID, Long following) {
+        User user = em.find(User.class, userID);
+        User followinguser = em.find(User.class, following);
+        user.addFollowing(followinguser);
+//        followinguser.addFollower(user);
         em.merge(user);
-
+        em.merge(followinguser);
         return true;
     }
 
     @Override
-    public Boolean unfollow(Long ID, User followed) {
-        User user = em.find(User.class, ID);
+    public Boolean unfollow(Long userID, User followed) {
+        User user = em.find(User.class, userID);
         User following = em.find(User.class, followed.getUserID());
         user.removeFollowed(following);
         em.merge(user);
