@@ -9,6 +9,10 @@ public interface PostDAO {
 
     Boolean deletePost(Post post);
 
+    List<Post> getAllPosts();
+
+    List<Post> getAllUserPosts(Long userID);
+
     Boolean sendPost(Long userID, String text, Boolean isReaction);
 
     Boolean sendReaction(Long userID, Long postID, String text, Boolean isReaction);

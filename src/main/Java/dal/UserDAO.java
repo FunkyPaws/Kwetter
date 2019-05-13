@@ -1,6 +1,7 @@
 package dal;
 
 import domain.User;
+
 import java.util.List;
 
 public interface UserDAO {
@@ -13,6 +14,8 @@ public interface UserDAO {
 
     User getUser(Long ID);
 
+    List<User> getUserbyName(String name);
+
     List<User> getUserFollowers(Long userID);
 
     List<User> getUserFollowing(Long userID);
@@ -22,4 +25,6 @@ public interface UserDAO {
     Boolean unfollow(Long ID, User followed);
 
     List<User> getAllUsers();
+
+    Long loginUser(String username, String password);
 }

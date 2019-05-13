@@ -1,4 +1,4 @@
-package main.Java.rest;
+package boudrary.rest;
 
 import domain.User;
 import service.UserService;
@@ -54,14 +54,6 @@ public class UserRescource {
         return Response.ok(users).build();
     }
 
-//    @POST
-//    @Path("follow/{ID}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public String followUser(@PathParam("ID") Long ID, JsonObject text) {
-//        this.userService.followUser(ID, Long.parseLong(text.getString("userID")));
-//        return "follower followed user 2";
-//    }
-
     @POST
     @Path("{ID}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -73,13 +65,6 @@ public class UserRescource {
         }
     }
 
-//    @POST
-//    @Path("unfollow/{ID}")
-//    public String unfollowUser(@PathParam("ID") Long ID, User user) {
-//        this.userService.unfollowUser(ID, user);
-//        return "follower unfollowed user 2";
-//    }
-
     @POST
     @Path("{ID}/unfollow")
     public Response unfollowUser(@PathParam("ID") Long ID, User user) {
@@ -88,7 +73,6 @@ public class UserRescource {
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
     }
 
     @GET
@@ -98,12 +82,12 @@ public class UserRescource {
         return Response.ok(user).build();
     }
 
-
-//    @GET
-//    @Path("getFollowing/{ID}")
-//    public List<User> getUserFollowing(@PathParam("ID") Long userID) {
-//        return this.userService.getUserFollowing(userID);
-//    }
+    @GET
+    @Path("byname/{name}")
+    public Response getUserByName(@PathParam("name") String name) {
+        List<User> users = this.userService.getUserByName(name);
+        return Response.ok(users).build();
+    }
 
     @GET
     @Path("{ID}/following")
@@ -111,13 +95,6 @@ public class UserRescource {
         List<User> users = this.userService.getUserFollowing(userID);
         return Response.ok(users).build();
     }
-
-
-//    @GET
-//    @Path("getFollowers/{ID}")
-//    public List<User> getUserFollowers(@PathParam("ID") Long userID) {
-//        return this.userService.getUserFollowers(userID);
-//    }
 
     // haalt dezelfde lijst op als following, haalt altijd de following op van een user.
     @GET

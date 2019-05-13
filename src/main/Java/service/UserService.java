@@ -31,6 +31,8 @@ public class UserService {
         return this.userDAO.getUser(ID);
     }
 
+    public List<User>getUserByName(String name){return this.userDAO.getUserbyName(name);}
+
     public Boolean followUser(Long ID, Long following) {
         return this.userDAO.follow(ID, following);
     }
@@ -50,4 +52,7 @@ public class UserService {
     public List<User> getUserFollowing(Long userID) {
         return this.userDAO.getUserFollowing(userID);
     }
+
+    public Long loginUser (String username, String password){return this.userDAO.loginUser(username,password);}
+
 }

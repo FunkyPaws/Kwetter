@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Admin home</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+
+</h:head>
+<h:body>
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Home"/>
+            <p:menuitem value="Posts"/>
+
+            <p:menuitem value="Log out"/>
+        </p:menubar>
+    </h:form>
+
+    <h:form id="form" style="width: 75%;margin: auto">
+        <p:dataGrid var="post" value="#{postBean.userPosts}" columns="2" layout="grid"
+                    rows="10" paginator="true" id="posts"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15">
+            <f:facet name="header">
+                All posts
+            </f:facet>
+
+
+            <p:panel header="#{post.postID}">
+                <p:panelGrid columns="2" columnClasses="label,value">
+                    <h:outputText value="post date:"/>
+                    <h:outputText value="#{post.dateTime}"/>
+                    <h:outputText value="post: "/>
+                    <h:outputText value="#{post.text}"/>
+
+
+                    <p:commandButton value="delete post" style="background-color: red; color: antiquewhite" action="#{postBean.deletePost(post)}"/>
+                </p:panelGrid>
+
+            </p:panel>
+        </p:dataGrid>
+    </h:form>
+
+</h:body>
+</html>

@@ -2,17 +2,21 @@ package domain;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.ws.rs.core.Link;
 import java.io.Serializable;
 import java.util.List;
+import org.springframework.hateoas.ResourceSupport;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "User.getAll", query = "SELECT u FROM User AS u"),
         @NamedQuery(name = "User.getFollowers", query = "SELECT u FROM User AS u WHERE :user MEMBER OF u.Followers"),
-        @NamedQuery(name = "User.getFollowing", query = "SELECT u FROM User AS u WHERE :user MEMBER OF u.Following")
+        @NamedQuery(name = "User.getFollowing", query = "SELECT u FROM User AS u WHERE :user MEMBER OF u.Following"),
+        @NamedQuery(name = "User.some", query = "SELECT u from User as u WHERE u.Name like :uName"),
+        @NamedQuery(name = "User.login", query = "SELECT u.UserID from User as u WHERE u.Name = :name AND u.Password = :password")
 
 })
-public class User implements Serializable {
+public class User extends ResourceSupport implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +35,7 @@ public class User implements Serializable {
     @JsonbTransient
     private List<User> Followers;
 
+    @JsonbTransient
     @ManyToMany
     private List<User> Following;
 
@@ -66,6 +71,7 @@ public class User implements Serializable {
         Following = following;
         Followers = follower;
     }
+
 
     public User() {
     }
@@ -127,6 +133,7 @@ public class User implements Serializable {
         IsAdmin = admin;
     }
 
+    @JsonbTransient
     public List<User> getFollowers() {
         return Followers;
     }
@@ -166,15 +173,15 @@ public class User implements Serializable {
         }
     }
 
-    //this user goes following other user
-//    public void addFollower(User user){
-//        if(!user.Followers.contains(this)){
-//            user.Followers.add(this);
-//        }
-//    }
+    //this users followers
+    public void addFollower(User user) {
+        if (!this.Followers.contains(user)) {
+            this.Followers.add(user);
+        }
+    }
 
-    public void removeFollowed(User user){
-        if(this.Following.contains(user)){
+    public void removeFollowed(User user) {
+        if (this.Following.contains(user)) {
             Following.remove(user);
         }
     }

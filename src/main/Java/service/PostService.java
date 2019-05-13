@@ -26,6 +26,8 @@ public class PostService {
         return this.postDAO.sendPost(userID, text, isReaction);
     }
 
+    public List<Post> getAllPosts(){return this.postDAO.getAllPosts();}
+
     public Boolean sendReaction(Long ID, Long postID, String text, Boolean isReaction){
         return this.postDAO.sendReaction(ID, postID ,text, isReaction);
     }

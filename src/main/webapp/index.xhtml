@@ -8,8 +8,10 @@
 <h:head>
     <title>Admin login</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+
 </h:head>
 <h:body>
+
     <div class="ui-fluid">
         <h:form id="loginForm" styleClass="loginForm">
             <p:growl id="msgs" showDetail="true"/>
@@ -20,11 +22,11 @@
                     <h:outputText value="Username: "/>
                     <p:inputText id="username"/>
                     <h:outputText value="Password: "/>
-                    <p:password id="password" value="#{passwordView.password1}"/>
+                    <p:password id="password"/>
 
-                    <p:button value="Login" styleClass="loginButton">
+                    <p:commandButton value="Log in" action="#{loginBean.loginUser}" style="background-color: cadetblue">
                         <!--//outcome="Login"-->
-                    </p:button>
+                    </p:commandButton>
 
 
                 </h:panelGrid>

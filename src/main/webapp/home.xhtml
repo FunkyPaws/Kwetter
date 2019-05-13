@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Admin home</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+
+</h:head>
+<h:body>
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Home"/>
+            <p:menuitem value="Posts"/>
+
+            <p:menuitem value="Log out"/>
+        </p:menubar>
+    </h:form>
+
+    <h:form id="form" style="width: 75%;margin: auto">
+        <p:dataGrid var="user" value="#{userBean.allUsers}" columns="3" layout="grid"
+                    rows="10" paginator="true" id="users"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15">
+            <f:facet name="header">
+                All users
+            </f:facet>
+
+
+            <p:panel header="#{user.userID}">
+                <p:panelGrid columns="2" columnClasses="label,value">
+                    <h:outputText value="gebruikersnaam:"/>
+                    <h:outputText value="#{user.name}"/>
+                    <h:outputText value="bio:"/>
+                    <h:outputText value="#{user.biography}"/>
+                    <h:outputText value="locatie:"/>
+                    <h:outputText value="#{user.location}"/>
+
+                    <p:commandButton value="get user posts" action="#{postBean.getUserPosts(user.userID)}"/>
+                    <p:commandButton value="delete gebruiker" action="#{userBean.deleteUser(user.userID)}" style="background-color: red; color: antiquewhite"/>
+                </p:panelGrid>
+
+            </p:panel>
+        </p:dataGrid>
+    </h:form>
+
+</h:body>
+</html>

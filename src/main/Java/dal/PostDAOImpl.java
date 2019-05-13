@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,21 @@ public class PostDAOImpl implements PostDAO {
     public Boolean deletePost(Post post) {
        em.remove(post);
        return true;
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+        Query query = em.createNamedQuery("Post.getAll", User.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Post> getAllUserPosts(Long userID) {
+        User user = userDAO.getUser(userID);
+        List<Post> userPosts = new ArrayList<>();
+        userPosts = em.createNamedQuery("Post.getLatestTen").setParameter("id", userID).getResultList();
+
+        return null;
     }
 
     @Override
@@ -69,7 +85,7 @@ public class PostDAOImpl implements PostDAO {
         List<Post> userPosts = new ArrayList<>();
         userPosts = em.createNamedQuery("Post.getLatestTen").setParameter("id", ID).getResultList();
         if(userPosts.size() > 10){
-            return userPosts.subList(userPosts.size()-10, userPosts.size());
+            return userPosts.subList(0, 10);
         }
         else {
             return userPosts;
