@@ -5,7 +5,11 @@ import javax.persistence.*;
 import javax.ws.rs.core.Link;
 import java.io.Serializable;
 import java.util.List;
+
+
 import org.springframework.hateoas.ResourceSupport;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Entity
 @NamedQueries({
@@ -184,5 +188,9 @@ public class User extends ResourceSupport implements Serializable {
         if (this.Following.contains(user)) {
             Following.remove(user);
         }
+    }
+
+    public Link[] getUserLinks(){
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import javax.persistence.*;
         @NamedQuery(name = "Post.getAllUserPosts", query = "SELECT p FROM Post AS p WHERE p.User.UserID = :id")
 })
 
-public class Post implements Serializable {
+public class Post extends ResourceSupport implements Serializable {
 //    Properties
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long PostID;

@@ -1,5 +1,6 @@
 package boudrary.rest;
 
+import com.sun.jndi.toolkit.url.Uri;
 import domain.User;
 import service.UserService;
 
@@ -10,17 +11,31 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Stateless
 @Path("users")
 public class UserRescource {
 
+    private final String URI = "/kwetter/api/users";
+
     @Inject
     UserService userService;
+
+    @GET
+    @Path("{ID}")
+    public Response getUserByID(@PathParam("ID") Long ID) {
+        User user = this.userService.getUserByID(ID);
+        return Response.ok(user).build();
+    }
 
     @POST
     public Response createUser(User user) {
         if (this.userService.createUser(user)) {
+            user.add(linkTo(UserRescource.class).slash(URI + "/" +user.getUserID()).withSelfRel());
+            user.add(linkTo(UserRescource.class).slash(URI + "/" +user.getUserID() + "/following").withRel("following"));
+            user.add(linkTo(UserRescource.class).slash(URI + "/" +user.getUserID() + "/followers").withRel("followers"));
+
             return Response.ok(user).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -73,13 +88,6 @@ public class UserRescource {
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-    }
-
-    @GET
-    @Path("{ID}")
-    public Response getUserByID(@PathParam("ID") Long ID) {
-        User user = this.userService.getUserByID(ID);
-        return Response.ok(user).build();
     }
 
     @GET
